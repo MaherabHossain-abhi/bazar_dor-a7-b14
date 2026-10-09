@@ -4,12 +4,12 @@ import BannerImg from '@/assets/bazar-hero.png'
 const BannerPage = () => {
     const date = new Date();
     return (
-        <div className='flex justify-between max-w-6xl mx-auto items-start container px-2 py-1 rounded-2xl bg-white'>
+        <div className='flex flex-col md:flex-row md:justify-between max-w-6xl mx-auto items-start container px-2 py-1 rounded-2xl bg-white mt-8'>
 
-            <div className="py-2 flex flex-col gap-4">
+            <div className="py-2 pl-0 sm:pl-2 flex flex-col gap-4 w-[55%]">
                 <p className='w-fit text-sm bg-green-100 font-semibold text-green-700 p-2 rounded-3xl'>{date.toLocaleDateString("bn-BD", {
-                        dateStyle: 'full'
-                    })}
+                    dateStyle: 'full'
+                })}
                 </p>
                 <h1 className="text-xl font-bold md:text-[26px]">
                     আজকের বাজারের দাম এক নজরে
@@ -22,7 +22,7 @@ const BannerPage = () => {
                 <button className='btn btn-success w-fit text-white'>সব পণ্য দেখুন</button>
             </div>
 
-
+            {/* image  */}
             <div className="w-[45%] flex justify-end items-center">
                 <Image
                     src={BannerImg}

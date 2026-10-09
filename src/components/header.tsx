@@ -7,8 +7,6 @@ import UserInfoPage from './UserInfo';
 const HeaderPage = () => {
     const date = new Date();
 
-
-
     return (
         <header className="bg-white">
             <div className='flex justify-between items-center py-3 max-w-6xl mx-auto container'>

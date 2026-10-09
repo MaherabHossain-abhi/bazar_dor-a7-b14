@@ -6,7 +6,7 @@ import { IProduct } from "@/type/type";
 
 
 export default async function Home() {
-  const res = await fetch("https://api.abcz.workers.dev/api/bazardor/products");
+  const res = await fetch("https://api.api-store.workers.dev/api/bazardor/products");
   const products: IProduct[] = await res.json();
 
   const isUp = products.filter(p => p.change.dir === 'up');

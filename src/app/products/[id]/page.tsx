@@ -1,6 +1,33 @@
+import StatCard from '@/components/StatCard';
 import { banglaNumber, toBnUnit } from '@/lib/utils';
-import { IProduct } from '@/type/type';
-import React from 'react';
+
+interface IProduct {
+  id: number
+  slug: string
+  nameBn: string
+  category: string
+  categoryNameBn: string
+  categoryIcon: string
+  unit: string
+  image: string
+  today: number
+  yesterday: number
+  lastWeek: number
+  lastMonth: number
+  change: Change
+  markets: Markets[]
+}
+
+interface Change {
+  dir: string
+  pct: number
+}
+interface Markets {
+  market: string
+  division: string
+  min: number
+  max: number
+}
 
 const ProductDetailsPage = async ({ params }: { params: Promise<{ id: string }> }) => {
     const { id } = await params;
@@ -18,6 +45,26 @@ const ProductDetailsPage = async ({ params }: { params: Promise<{ id: string }> 
                 : { text: 'অপরিবর্তিত', color: 'text-gray-600' };
 
     const isUp = product.change.dir === 'up';
+
+    const markets = (product.markets ?? []).filter(
+        (m) => typeof m.min === 'number' && typeof m.max === 'number' && m.min > 0 && m.max > 0
+    );
+
+    const hasMarkets = markets.length > 0;
+
+    const cheapest = hasMarkets
+        ? markets.reduce((a, b) => (b.min < a.min ? b : a))
+        : null;
+
+    const priciest = hasMarkets
+        ? markets.reduce((a, b) => (b.max > a.max ? b : a))
+        : null;
+
+    const avg = hasMarkets
+        ? Math.round(
+            (markets.reduce((sum, m) => sum + (m.min + m.max) / 2, 0) / markets.length) * 100
+        ) / 100
+        : product.today;
     return (
         <div>
             <div className="max-w-6xl mx-auto container">
@@ -53,8 +100,24 @@ const ProductDetailsPage = async ({ params }: { params: Promise<{ id: string }> 
                 </div>
 
                 <div className="bg-white py-6 px-4 rounded-xl w-full mt-5">
-                    <h1 className='text-xl font-bold'>দামের সারসংক্ষেপ</h1>
-
+                    <h1 className=' mb-3 font-bold'>দামের সারসংক্ষেপ</h1>
+                    <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-3">
+                        <StatCard
+                            label="সর্বনিম্ন দাম"
+                            value={cheapest?.min ?? product.today}
+                            note={'সবচেয়ে কম দামের বাজার'}
+                        />
+                        <StatCard
+                            label="সর্বাধিক দাম"
+                            value={priciest?.max ?? product.today}
+                            note={'সবচেয়ে বেশি দামের বাজার'}
+                        />
+                        <StatCard
+                            label="গড় দাম"
+                            value={avg}
+                            note={`প্রতি ${toBnUnit(product.unit)}-এর হিসাবে`}
+                        />
+                    </div>
                 </div>
 
             </div>

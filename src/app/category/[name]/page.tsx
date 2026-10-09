@@ -6,7 +6,7 @@ import { IProduct } from '@/type/type';
 async function Products({ params }: { params: Promise<{ name: string }> }) {
     const { name } = await params;
     const res = await fetch(
-        `https://api.abcz.workers.dev/api/bazardor/products?category=${encodeURIComponent(name)}`
+        `https://api.api-store.workers.dev/api/bazardor/products?category=${encodeURIComponent(name)}`
     );
 
     if (!res.ok) notFound();

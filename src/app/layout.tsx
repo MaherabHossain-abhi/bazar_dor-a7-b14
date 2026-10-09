@@ -4,6 +4,7 @@ import "./globals.css";
 import HeaderPage from "@/components/header";
 import MarquePage from "@/components/marque";
 import { Bounce, ToastContainer } from "react-toastify";
+import FooterPage from "@/components/Footer";
 
 const notoSerif = Noto_Serif_Bengali({
   subsets: ["bengali", "latin"],
@@ -38,7 +39,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             pauseOnHover
             theme="light"
             transition={Bounce}
-          />        </main>
+          />
+        </main>
+        <FooterPage />
       </body>
     </html>
   );

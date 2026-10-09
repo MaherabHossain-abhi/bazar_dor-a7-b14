@@ -17,7 +17,7 @@ async function Products({ params }: { params: Promise<{ name: string }> }) {
     return (
         <section className="py-6 max-w-6xl container mx-auto">
 
-            <div className="mb-6 flex items-center gap-3">
+            <div className="mb-6 flex items-center gap-3 bg-white py-2 px-4 rounded-xl w-full">
                 <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-green-50 text-3xl">
                     {categoryIcon}
                 </div>
@@ -29,7 +29,17 @@ async function Products({ params }: { params: Promise<{ name: string }> }) {
                 </div>
             </div>
 
-
+            <div className="bg-white py-2 px-4 rounded-xl w-full mt-5">
+                <div className="flex justify-end gap-2 items-center">
+                    <p>সাজান</p>
+                    <select defaultValue="Color scheme" className="select select-accent">
+                        <option>Default</option>
+                        <option>দাম: কম থেকে বেশি</option>
+                        <option>দাম: বেশি থেকে কম</option>
+                    </select>
+                </div>
+            </div>
+            <h1 className='text-sm text-gray-500 my-2'>মোট {products.length.toLocaleString('bn-BD')}টি পণ্য দেখানো হচ্ছে</h1>
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 ">
                 {products.map((p) => (
                     <ProductCard key={p.id} product={p} />

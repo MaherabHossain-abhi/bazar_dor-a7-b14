@@ -1,4 +1,5 @@
 import { banglaNumber, toBnUnit } from '@/lib/utils';
+import Link from 'next/link';
 import React from 'react';
 
 interface IProduct {
@@ -29,7 +30,8 @@ const ProductCard = ({ product }: { product: IProduct }) => {
 
     return (
         <div>
-            <div className="group w-full rounded-2xl border border-gray-100 bg-white p-4 shadow-md">
+             <Link href={`/products/${product.id}`}>
+                <div className="group w-full rounded-2xl border border-gray-100 bg-white p-4">
                 <div className="flex gap-2 items-center">
                     <p className='text-3xl p-2 bg-blue-100 rounded-2xl'>{product.image}</p>
                     <div className="flex flex-col gap-1">
@@ -49,6 +51,7 @@ const ProductCard = ({ product }: { product: IProduct }) => {
                     </div>
                 </div>
             </div>
+            </Link>
         </div>
     );
 };

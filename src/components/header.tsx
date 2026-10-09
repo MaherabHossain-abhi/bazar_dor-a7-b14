@@ -2,6 +2,8 @@ import Image from 'next/image';
 import logoImg from '@/assets/logo-icon.png'
 import Link from 'next/link';
 import NavLinks from './navlinks';
+import { authClient } from '@/lib/auth-client';
+import UserInfoPage from '@/UserInfo';
 
 const HeaderPage = () => {
   const date = new Date();
@@ -29,11 +31,7 @@ const HeaderPage = () => {
         </div>
 
 
-        <div className="flex gap-2 items-center ">
-          <Link href={'/sign-in'}><button className='btn btn-sm'>সাইন ইন</button></Link>
-          <Link href={'/sign-up'}> <button className='btn btn-sm bg-green-600 text-white'>সাইন আপ</button></Link>
-
-        </div>
+        <UserInfoPage />
       </div>
       <NavLinks />
     </header>

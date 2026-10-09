@@ -5,11 +5,11 @@ const BannerPage = () => {
     const date = new Date();
     return (
         <div className='flex flex-col md:flex-row md:justify-between max-w-6xl mx-auto items-start container px-2 py-1 rounded-2xl bg-white mt-8'>
-
+            {/* text */}
             <div className="py-2 pl-0 sm:pl-2 flex flex-col gap-4 w-[55%]">
                 <p className='w-fit text-sm bg-green-100 font-semibold text-green-700 p-2 rounded-3xl'>{date.toLocaleDateString("bn-BD", {
-                    dateStyle: 'full'
-                })}
+                        dateStyle: 'full'
+                    })}
                 </p>
                 <h1 className="text-xl font-bold md:text-[26px]">
                     আজকের বাজারের দাম এক নজরে

@@ -21,7 +21,7 @@ async function Products({ params }: { params: Promise<{ name: string }> }) {
                 <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-green-50 text-3xl">
                     {categoryIcon}
                 </div>
-                <div className="flex flex-col">
+                <div className="flex flex-col ">
                     <h1 className="text-xl font-bold md:text-3xl">{categoryNameBn}</h1>
                     <p className="text-sm text-gray-500">
                         {products.length.toLocaleString('bn-BD')}টি পণ্যের আজকের দাম ও পরিবর্তন

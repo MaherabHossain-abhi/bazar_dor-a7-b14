@@ -16,7 +16,6 @@ const SignInPage = () => {
         })
 
         if (data) {
-            // console.log(data);
             toast.success('সাইন ইন সফল হয়েছে');
         }
         if (error) {

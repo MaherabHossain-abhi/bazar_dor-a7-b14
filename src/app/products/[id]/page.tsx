@@ -1,53 +1,39 @@
-import { Suspense } from 'react';
 import StatCard from '@/components/StatCard';
 import { banglaNumber, toBnUnit } from '@/lib/utils';
 
 interface IProduct {
-    id: number;
-    slug: string;
-    nameBn: string;
-    category: string;
-    categoryNameBn: string;
-    categoryIcon: string;
-    unit: string;
-    image: string;
-    today: number;
-    yesterday: number;
-    lastWeek: number;
-    lastMonth: number;
-    change: Change;
-    markets: Markets[];
+  id: number
+  slug: string
+  nameBn: string
+  category: string
+  categoryNameBn: string
+  categoryIcon: string
+  unit: string
+  image: string
+  today: number
+  yesterday: number
+  lastWeek: number
+  lastMonth: number
+  change: Change
+  markets: Markets[]
 }
 
 interface Change {
-    dir: string;
-    pct: number;
+  dir: string
+  pct: number
 }
-
 interface Markets {
-    market: string;
-    division: string;
-    min: number;
-    max: number;
+  market: string
+  division: string
+  min: number
+  max: number
 }
 
-const ProductDetails = async ({
-    params,
-}: {
-    params: Promise<{ id: string }>;
-}) => {
+const ProductDetailsPage = async ({ params }: { params: Promise<{ id: string }> }) => {
     const { id } = await params;
-
-    const res = await fetch(
-        `https://api.api-store.workers.dev/api/bazardor/products/${id}`
-    );
-
-    if (!res.ok) {
-        throw new Error('Failed to fetch product details');
-    }
-
+    const res = await fetch(`https://openapi.programming-hero.com/api/bazardor/products/${id}`);
     const product: IProduct = await res.json();
-
+    // console.log(product)
     const diff = product.today - product.yesterday;
     const absDiff = Math.abs(Number(diff.toFixed(2)));
 
@@ -61,11 +47,7 @@ const ProductDetails = async ({
     const isUp = product.change.dir === 'up';
 
     const markets = (product.markets ?? []).filter(
-        (m) =>
-            typeof m.min === 'number' &&
-            typeof m.max === 'number' &&
-            m.min > 0 &&
-            m.max > 0
+        (m) => typeof m.min === 'number' && typeof m.max === 'number' && m.min > 0 && m.max > 0
     );
 
     const hasMarkets = markets.length > 0;
@@ -80,99 +62,54 @@ const ProductDetails = async ({
 
     const avg = hasMarkets
         ? Math.round(
-              (markets.reduce(
-                  (sum, m) => sum + (m.min + m.max) / 2,
-                  0
-              ) /
-                  markets.length) *
-                  100
-          ) / 100
+            (markets.reduce((sum, m) => sum + (m.min + m.max) / 2, 0) / markets.length) * 100
+        ) / 100
         : product.today;
-
     return (
         <div>
             <div className="max-w-6xl mx-auto container">
-                {/* Product details */}
+
                 <div className="mt-5 w-full rounded-xl bg-white px-4 py-3">
                     <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                         <div className="flex items-center gap-3">
-                            <p className="rounded-2xl bg-amber-50 p-2 text-4xl">
-                                {product.image}
-                            </p>
-
+                            <p className="rounded-2xl bg-amber-50 p-2 text-4xl">{product.image}</p>
                             <div className="flex flex-col gap-1">
-                                <h2 className="text-2xl font-bold">
-                                    {product.nameBn}
-                                </h2>
-
+                                <h2 className="text-2xl font-bold">{product.nameBn}</h2>
                                 <p className="text-sm text-gray-500">
-                                    প্রতি {toBnUnit(product.unit)} ·{' '}
-                                    {product.categoryNameBn}
+                                    প্রতি {toBnUnit(product.unit)} · {product.categoryNameBn}
                                 </p>
-
                                 <p className="text-sm font-semibold text-gray-500">
                                     গতকালের তুলনায় আজ দাম{' '}
-                                    <span
-                                        className={`font-bold ${status.color}`}
-                                    >
-                                        {status.text}
-                                    </span>
-
-                                    {diff !== 0 && (
-                                        <>
-                                            {' '}
-                                            · {banglaNumber(absDiff)} টাকা
-                                        </>
-                                    )}
+                                    <span className={`font-bold ${status.color}`}>{status.text}</span>
+                                    {diff !== 0 && <> · {banglaNumber(absDiff)} টাকা</>}
                                 </p>
                             </div>
                         </div>
 
                         <div className="flex flex-col gap-1 sm:text-right">
-                            <p className="text-sm text-gray-500">
-                                আজকের দাম
-                            </p>
-
-                            <h2 className="text-3xl font-bold">
-                                {banglaNumber(product.today)}
-                            </h2>
-
-                            <p className="text-sm text-gray-500">
-                                টাকা / {toBnUnit(product.unit)}
-                            </p>
-
-                            <span
-                                className={
-                                    isUp ? 'text-red-600' : 'text-green-600'
-                                }
-                            >
-                                {isUp
-                                    ? `▲ ${product.change.pct}%`
-                                    : `▼ ${product.change.pct}%`}
+                            <p className="text-sm text-gray-500">আজকের দাম</p>
+                            <h2 className="text-3xl font-bold">{banglaNumber(product.today)}</h2>
+                            <p className="text-sm text-gray-500">টাকা / {toBnUnit(product.unit)}</p>
+                            <span className={isUp ? 'text-red-600' : 'text-green-600'}>
+                                {isUp ? `▲ ${product.change.pct}%` : `▼ ${product.change.pct}%`}
                             </span>
                         </div>
                     </div>
                 </div>
 
-                {/* Price summary */}
                 <div className="bg-white py-6 px-4 rounded-xl w-full mt-5">
-                    <h1 className="mb-3 font-bold">
-                        দামের সারসংক্ষেপ
-                    </h1>
-
+                    <h1 className=' mb-3 font-bold'>দামের সারসংক্ষেপ</h1>
                     <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-3">
                         <StatCard
                             label="সর্বনিম্ন দাম"
                             value={cheapest?.min ?? product.today}
-                            note="সবচেয়ে কম দামের বাজার"
+                            note={'সবচেয়ে কম দামের বাজার'}
                         />
-
                         <StatCard
                             label="সর্বাধিক দাম"
                             value={priciest?.max ?? product.today}
-                            note="সবচেয়ে বেশি দামের বাজার"
+                            note={'সবচেয়ে বেশি দামের বাজার'}
                         />
-
                         <StatCard
                             label="গড় দাম"
                             value={avg}
@@ -180,25 +117,10 @@ const ProductDetails = async ({
                         />
                     </div>
                 </div>
+
             </div>
         </div>
     );
 };
 
-export default function ProductDetailsPage({
-    params,
-}: {
-    params: Promise<{ id: string }>;
-}) {
-    return (
-        <Suspense
-            fallback={
-                <p className="p-6 text-center text-gray-500">
-                    পণ্যের তথ্য লোড হচ্ছে...
-                </p>
-            }
-        >
-            <ProductDetails params={params} />
-        </Suspense>
-    );
-}
+export default ProductDetailsPage;

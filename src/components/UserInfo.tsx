@@ -17,7 +17,6 @@ const UserInfoPage = () => {
             {user ?
                 <>
                     <div className="dropdown dropdown-end">
-
                         <div
                             tabIndex={0}
                             role="button"
@@ -63,8 +62,8 @@ const UserInfoPage = () => {
                     </div>
                 </> :
                 <div className="flex gap-2 items-center ">
-                    <Link href={'/sign-in'}><button className='btn btn-sm'>সাইন ইন</button></Link>
-                    <Link href={'/sign-up'}> <button className='btn btn-sm bg-green-600 text-white'>সাইন আপ</button></Link>
+                    <Link href={'/sign-in'}><button className='btn btn-xs sm:btn-sm'>সাইন ইন</button></Link>
+                    <Link href={'/sign-up'}> <button className='btn btn-xs sm:btn-sm bg-green-600 text-white'>সাইন আপ</button></Link>
 
                 </div>
             }

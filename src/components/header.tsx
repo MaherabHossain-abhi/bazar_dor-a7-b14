@@ -3,9 +3,10 @@ import logoImg from '@/assets/logo-icon.png';
 import Link from 'next/link';
 import NavLinks from './navlinks';
 import UserInfoPage from './UserInfo';
+import CurrentDate from './CurrentDate';
+
 
 const HeaderPage = () => {
-    const date = new Date();
 
     return (
         <header className="bg-white">
@@ -23,9 +24,7 @@ const HeaderPage = () => {
                         </div>
                         <div className="flex flex-col gap-1">
                             <h1 className='text-[16px] font-extrabold'>বাজার দর</h1>
-                            <p className='text-[10px] sm:text-xs font-semibold text-gray-500'>{date.toLocaleDateString("bn-BD", {
-                                dateStyle: 'full'
-                            })}</p>
+                          <CurrentDate />
                         </div>
                     </div>
                 </Link>
